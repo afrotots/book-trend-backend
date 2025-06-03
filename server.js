@@ -8,26 +8,28 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/book-trends', async (req, res) => {
-  const topic = req.query.topic || 'dog training';
+  const topic = req.query.topic || 'general';
 
-  // Simulated scraped titles (real scraping can be added next)
+  const capitalizedTopic = topic.charAt(0).toUpperCase() + topic.slice(1);
+
+  // Simulate always returning mock data no matter the topic
   const mockTitles = [
     {
-      title: `Mastering ${topic} in 7 Days`,
-      monthlySearches: 4400,
-      trendPercent: 62,
+      title: `Mastering ${capitalizedTopic} in 7 Days`,
+      monthlySearches: Math.floor(Math.random() * 5000) + 1000,
+      trendPercent: Math.floor(Math.random() * 50) + 50,
       price: 5.99,
-      rank: 2111,
-      keywords: [`${topic}`, 'guide', 'step by step', 'training', 'fast results', 'behavior', 'tips', 'secrets'],
+      rank: Math.floor(Math.random() * 4000) + 1000,
+      keywords: [topic, 'guide', 'step by step', 'training', 'fast results', 'behavior', 'tips', 'secrets'],
       categories: ['Self Help > Training', 'Guides', 'Nonfiction > Practical']
     },
     {
-      title: `${topic.charAt(0).toUpperCase() + topic.slice(1)} for Beginners`,
-      monthlySearches: 3900,
-      trendPercent: 55,
+      title: `${capitalizedTopic} for Beginners`,
+      monthlySearches: Math.floor(Math.random() * 4000) + 800,
+      trendPercent: Math.floor(Math.random() * 40) + 50,
       price: 6.99,
-      rank: 2650,
-      keywords: ['intro', `${topic}`, 'basics', 'learn quickly', 'skills', 'coaching', 'foundation', 'tools'],
+      rank: Math.floor(Math.random() * 3000) + 1000,
+      keywords: ['intro', topic, 'basics', 'learn quickly', 'skills', 'coaching', 'foundation', 'tools'],
       categories: ['Education > General', 'Learning Skills', 'DIY & How-To']
     }
   ];
