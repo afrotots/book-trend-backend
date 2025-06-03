@@ -9,10 +9,9 @@ app.use(express.json());
 
 app.get('/book-trends', async (req, res) => {
   const topic = req.query.topic || 'general';
-
   const capitalizedTopic = topic.charAt(0).toUpperCase() + topic.slice(1);
 
-  // Simulate always returning mock data no matter the topic
+  // Always return mocked trending books based on ANY topic
   const mockTitles = [
     {
       title: `Mastering ${capitalizedTopic} in 7 Days`,
