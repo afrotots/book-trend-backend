@@ -1,10 +1,11 @@
 {
   "name": "book-trend-api",
   "version": "1.0.0",
-  "description": "Backend for topic-based book trend generator with Puppeteer scraping",
+  "description": "Backend with Puppeteer scraping",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "puppeteer install"
   },
   "type": "module",
   "dependencies": {
