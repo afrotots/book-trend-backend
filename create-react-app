@@ -1,1 +1,58 @@
-npx create-react-app frontend
+import React, { useState } from 'react';
+
+const App = () => {
+  const [keywords, setKeywords] = useState('');
+  const [results, setResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data from the backend API
+  const fetchBookData = async (keyword) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`https://book-api-k949.onrender.com/book-data?keyword=${keyword}`);
+      const data = await response.json();
+      return data; // This will contain the results from the backend
+    } catch (error) {
+      console.error('Error fetching book data:', error);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle form submission to generate titles
+  const handleGenerateTitles = async () => {
+    if (keywords.trim() === '') return;
+    const data = await fetchBookData(keywords);
+    if (data) {
+      setResults(data); // Set the results to display on the UI
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={keywords}
+        onChange={(e) => setKeywords(e.target.value)}
+        placeholder="Enter keywords"
+      />
+      <button onClick={handleGenerateTitles} disabled={isLoading}>
+        {isLoading ? 'Loading...' : 'Generate Titles'}
+      </button>
+
+      {results.length > 0 && (
+        <div>
+          <h3>Generated Titles:</h3>
+          <ul>
+            {results.map((title, index) => (
+              <li key={index}>{title}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
